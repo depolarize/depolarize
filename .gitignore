@@ -1,0 +1,11 @@
+# # Ignore contents of bart-finetuned-neutral
+# data_gen/bart-finetuned-neutral/*
+# !data_gen/bart-finetuned-neutral/.gitkeep
+
+# # Ignore contents of flan-t5-neutral
+# data_gen/flan-t5-neutral/*
+# !data_gen/flan-t5-neutral/.gitkeep
+
+#ignore contents of data_gen
+data_gen/*
+!data_gen/.gitkeep

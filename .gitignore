@@ -9,3 +9,4 @@
 #ignore contents of data_gen
 data_gen/*
 !data_gen/.gitkeep
+.env

@@ -7,6 +7,11 @@
 # !data_gen/flan-t5-neutral/.gitkeep
 
 #ignore contents of data_gen
+**/__pycache__/
+*.pyc
+
 data_gen/*
 !data_gen/.gitkeep
 .env
+server/political_alignment/results/
+server/political_alignment/political_affiliation_model

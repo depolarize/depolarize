@@ -18,7 +18,7 @@ def generate_neutral_summary(source, model=1):
         inputs = tokenizer(input_text, return_tensors="pt", truncation=True, max_length=512)
 
         # Generate summary
-        summary_ids = model.generate(inputs["input_ids"], max_length=128, min_length=60, do_sample=True)
+        summary_ids = model.generate(inputs["input_ids"], max_length=128, min_length=60, do_sample=False)
         summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
         return summary
@@ -34,7 +34,7 @@ def generate_neutral_summary(source, model=1):
         inputs = tokenizer(input_text, return_tensors="pt", truncation=True, max_length=512)
 
         # Generate summary
-        summary_ids = model.generate(inputs["input_ids"], max_length=128, min_length=60, do_sample=True)
+        summary_ids = model.generate(inputs["input_ids"], max_length=128, min_length=60, do_sample=False)
         summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
         return summary

@@ -2,25 +2,48 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
     <title>depolarize</title>
 </head>
 
 <body>
-    <div id="app">
-        <h1>depolarize</h1>
-        <div>
-            <strong>bias:</strong> <span id="bias"></span>
+
+    <div id="loader" class="loader"></div>
+
+    <div id="content" class="popup-card" style="display:none">
+        <h1 class="title"><img src="../icons/icon-32.png">epolarize</h1>
+
+        <hr />
+
+        <div class="info">
+            <div class="scale-bias">
+                <span class="label">Bias:</span>
+                <div class="bar-container">
+                    <div class="bar-fill" id="bias-fill"></div>
+                </div>
+                <span id="bias" class="value"></span>
+            </div>
+
+            <div id="bias-intensity" class="descriptor"></div>
+
+            <hr />
+
+            <div class="scale-alignment">
+                <span class="label">Alignment:</span>
+                <div class="bar-container gradient">
+                    <div class="marker" id="alignment-marker"></div>
+                </div>
+                <span id="alignment" class="value"></span>
+            </div>
         </div>
-        <div>
-            <strong>political leaning:</strong> <span id="alignment"></span>
-        </div>
-        <hr>
-        <h1>Summary</h1>
-        <div id="summary"></div>
+
+        <hr />
+        <h2 class="subtitle">neutral summary</h2>
+        <div id="summary" class="summary"></div>
     </div>
+
     <script src="popup.js"></script>
 </body>
 

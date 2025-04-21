@@ -23,3 +23,14 @@ chrome.runtime.onMessage.addListener(async (msg) => {
     }
   }
 });
+
+// clear previous analysis wen tabs switched
+chrome.tabs.onActivated.addListener(async ({ tabId }) => {
+  await chrome.storage.local.clear();
+  console.log('[Depolarize] cleared old data on tab switch');
+
+  chrome.scripting.executeScript({
+    target: { tabId },
+    files: ['content.js']
+  });
+});

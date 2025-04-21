@@ -94,7 +94,7 @@ def interpret_delta(delta):
     else:
         return "Significant emotional difference."
 
-def print_comparison_results(result):
+def comparison_results(result):
     # def format_tokens(tokens):
     #     return ", ".join(tokens) if tokens else "None"
 
@@ -117,17 +117,18 @@ def print_comparison_results(result):
     # print()
 
     delta = result['Delta Avg Arousal']
+    return round(delta, 2)
     # print("=== Comparative Result ===")
-    if delta > 0:
-        return (f"Original shows higher emotional intensity (+{delta:.3f}) compared to Neutral Summary. \n Interpretation: {interpret_delta(delta)}")
+    # if delta > 0:
+    #     return (f"Original shows higher emotional intensity (+{delta:.3f}) compared to Neutral Summary. \n Interpretation: {interpret_delta(delta)}")
     
-    elif delta < 0:
-        return (f"Neutral Summary shows higher emotional intensity (+{abs(delta):.3f}) compared to Original. \n Interpretation: {interpret_delta(delta)}")
-    else:
-        return (f"Both texts have equal emotional intensity. \n Interpretation: {interpret_delta(delta)}")
+    # elif delta < 0:
+    #     return (f"Neutral Summary shows higher emotional intensity (+{abs(delta):.3f}) compared to Original. \n Interpretation: {interpret_delta(delta)}")
+    # else:
+    #     return (f"Both texts have equal emotional intensity. \n Interpretation: {interpret_delta(delta)}")
 
 def calculate_bias(text_a, text_b):
     vad_dict = load_VAD_lexicons()
     
     result = compare_texts(text_a, text_b, vad_dict)
-    return print_comparison_results(result)
+    return comparison_results(result)

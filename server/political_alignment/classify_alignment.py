@@ -16,10 +16,13 @@ label_names = [
     "highly liberal"
 ]
 
-def classify(texts):
+def classify_alignment(texts: str):
     """
-    texts: single string or list of strings
-    returns: list of (pred_idx, pred_label, probs) tuples
+    Input params: 
+        - text (str)
+    
+    Returns:
+        - poltical alignment of the given text
     """
     if isinstance(texts, str):
         texts = [texts]

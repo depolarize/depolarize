@@ -1,15 +1,17 @@
 import re
+import os
 
-'''
-Usage:
-text_a = "CHARLOTTE, N.C. — The closely-watched special U.S. House election being held here Tuesday is taking place in the shadow of a political scandal that, according to the candidates, is having a real impact on the race. But this time around, the issue is not the illegal ballot harvesting that marred last year's contest, it's the fact the one of the candidates has been effectively running for over two years. Democratic candidate Dan McCready likes to tell his supporters that he began running for the 9th Congressional District seat when his..."
-text_b = "A special election in North Carolina's 9th congressional district on Tuesday is essentially a do-over after a candidate's 2018 victory was negated by allegations of illegal ballot harvesting. The election could flip a longtime Republican district, and has shifted national attention to the issue of ballot harvesting, the arguments in favor of and against it, and how different states regulate the practice."
 
-result = compare_texts(text_a, text_b, vad_dict)
-print_comparison_results(result)
-'''
+# Usage:
+# text_a = "CHARLOTTE, N.C. — The closely-watched special U.S. House election being held here Tuesday is taking place in the shadow of a political scandal that, according to the candidates, is having a real impact on the race. But this time around, the issue is not the illegal ballot harvesting that marred last year's contest, it's the fact the one of the candidates has been effectively running for over two years. Democratic candidate Dan McCready likes to tell his supporters that he began running for the 9th Congressional District seat when his..."
+# text_b = "A special election in North Carolina's 9th congressional district on Tuesday is essentially a do-over after a candidate's 2018 victory was negated by allegations of illegal ballot harvesting. The election could flip a longtime Republican district, and has shifted national attention to the issue of ballot harvesting, the arguments in favor of and against it, and how different states regulate the practice."
+
+# result = compare_texts(text_a, text_b, vad_dict)
+# print_comparison_results(result)
+
 def load_VAD_lexicons():
-    VAD_path = '/Users/apendela10/CSCE489/project/nlp_backend/data_gen/VAD/NRC-VAD-Lexicon.txt'
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    VAD_path = os.path.join(base_dir, 'NRC-VAD-Lexicon.txt')
     with open(VAD_path, 'r') as infile:
         lines = infile.read().split("\n")
         
@@ -24,9 +26,7 @@ def load_VAD_lexicons():
                 'd': float(d_score)
             }
         return vad_dict
-
-vad_dict = load_VAD_lexicons()
-
+    
 def tokenize(text):
     return re.findall(r'\b\w+\b', text.lower())
 
@@ -95,8 +95,8 @@ def interpret_delta(delta):
         return "Significant emotional difference."
 
 def print_comparison_results(result):
-    def format_tokens(tokens):
-        return ", ".join(tokens) if tokens else "None"
+    # def format_tokens(tokens):
+    #     return ", ".join(tokens) if tokens else "None"
 
     # print("=== Original Metrics ===")
     # print(f"Arousal+       : {result['Original']['Arousal+']:.3f}")
@@ -116,7 +116,7 @@ def print_comparison_results(result):
     # print(f"Negative Tokens: {format_tokens(result['Neutral Summary']['Negative Tokens'])}")
     # print()
 
-    delta = result['Delta Arousal_sum']
+    delta = result['Delta Avg Arousal']
     # print("=== Comparative Result ===")
     if delta > 0:
         return (f"Original shows higher emotional intensity (+{delta:.3f}) compared to Neutral Summary. \n Interpretation: {interpret_delta(delta)}")
@@ -125,3 +125,9 @@ def print_comparison_results(result):
         return (f"Neutral Summary shows higher emotional intensity (+{abs(delta):.3f}) compared to Original. \n Interpretation: {interpret_delta(delta)}")
     else:
         return (f"Both texts have equal emotional intensity. \n Interpretation: {interpret_delta(delta)}")
+
+def calculate_bias(text_a, text_b):
+    vad_dict = load_VAD_lexicons()
+    
+    result = compare_texts(text_a, text_b, vad_dict)
+    return print_comparison_results(result)

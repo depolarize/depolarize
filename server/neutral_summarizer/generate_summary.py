@@ -7,7 +7,7 @@ def generate_neutral_summary(source, model=1):
         print(generate_neutral_summary("""enter source source""", model=2)) # 1 for bart, 2 for flan-t5
     '''
     if model == 1:
-        model_path = "apend10/bart-finetuned-neutral" # can swap out to "apend10/flan-t5-neutral if needed"
+        model_path = "apend10/bart-finetuned-neutral"
         tokenizer = BartTokenizer.from_pretrained(model_path)
         model = BartForConditionalGeneration.from_pretrained(model_path)
 

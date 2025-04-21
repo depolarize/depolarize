@@ -12,17 +12,17 @@ chrome.runtime.onMessage.addListener(async (msg) => {
       });
 
       // 2) Log status
-      console.log('[De‑Polarize] HTTP status:', res.status, res.statusText);
+      console.log('[Depolarize] HTTP status:', res.status, res.statusText);
 
       // 3) Parse JSON once
       const data = await res.json();
-      console.log('[De‑Polarize] parsed data:', data);
+      console.log('[Depolarize] parsed data:', data);
 
       // 4) Store the entire payload (bias, alignment, summary)
       await chrome.storage.local.set(data);
 
     } catch (err) {
-      console.error('[De‑Polarize] error in fetch:', err);
+      console.error('[Depolarize] error in fetch:', err);
     }
   }
 });

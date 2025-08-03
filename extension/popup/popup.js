@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const mark = document.getElementById('alignment-marker');
     const alignText = document.getElementById('alignment');
     const summary = document.getElementById('summary');
+    const articleTextDiv = document.getElementById('article-text'); // Add this line
+    const toggleBtn = document.getElementById('toggle-article-text');
+
+    let articleTextVisible = false;
 
     function getBiasIntensity(val) {
         if (val <= 3) return 'Minimal emotional intensity';
@@ -17,9 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showData(data) {
         const b = Number(data.bias) * 10 || 0;
+        const roundedBias = Math.round(b * 100) / 100; 
         const pct = Math.min(Math.max(b, 0), 10) * 10;
         biasFill.style.width = pct + '%';
-        biasText.textContent = b;
+        biasText.textContent = roundedBias;
 
         biasDesc.textContent = getBiasIntensity(b);
 
@@ -37,12 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         summary.textContent = data.summary || '';
 
+        articleTextDiv.textContent = data.articleText || ''; 
         loader.style.display = 'none';
         content.style.display = 'block';
     }
 
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            articleTextVisible = !articleTextVisible;
+            articleTextDiv.style.display = articleTextVisible ? 'block' : 'none';
+            toggleBtn.textContent = articleTextVisible ? 'Hide article text' : 'Show article text';
+        });
+    }
+
     chrome.storage.local.get(
-        ['bias', 'alignment', 'summary'],
+        ['bias', 'alignment', 'summary', 'articleText'], 
         d => {
             if (d.bias || d.alignment || d.summary) {
                 showData(d);
@@ -53,10 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.onChanged.addListener((changes, area) => {
         if (
             area === 'local' &&
-            (changes.bias || changes.alignment || changes.summary)
+            (changes.bias || changes.alignment || changes.summary || changes.articleText) 
         ) {
             chrome.storage.local.get(
-                ['bias', 'alignment', 'summary'],
+                ['bias', 'alignment', 'summary', 'articleText'],
                 showData
             );
         }

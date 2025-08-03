@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener(async (msg) => {
       console.log('[Depolarize] parsed data:', data);
 
       // store payload (bias, alignment, summary) in local storage
-      await chrome.storage.local.set(data);
+      await chrome.storage.local.set({ ...data, articleText: msg.payload });
 
     } catch (err) {
       console.error('[Depolarize] error in fetch:', err);
